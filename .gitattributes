@@ -1,0 +1,6 @@
+dist filter=lfs diff=lfs merge=lfs -text
+dist/planet9-linux filter=lfs diff=lfs merge=lfs -text
+dist/planet9-macos filter=lfs diff=lfs merge=lfs -text
+dist/planet9-win.exe filter=lfs diff=lfs merge=lfs -text
+dist/planet9-alpine filter=lfs diff=lfs merge=lfs -text
+dist/planet9-arm filter=lfs diff=lfs merge=lfs -text
