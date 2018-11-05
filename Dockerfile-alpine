@@ -1,0 +1,24 @@
+# This uses alpine, which is a smaller and hardened verion of Linux. This is
+# prefered, unless you need another Linux version because of custom packages
+FROM node:10.4-alpine
+
+# comment out this if you need to build custom npm modules which requires
+# compilation
+# RUN apk update && apk add --no-cache \
+#     libstdc++ \
+#     libgcc \
+#     python \
+#     build-base
+
+ENV NODE_ENV="production"
+WORKDIR /home/node
+
+COPY dist/planet9-alpine bootstrap.sh LICENSES package* ./
+COPY --chown=node config* ./config/
+
+RUN sh bootstrap.sh
+
+USER node
+EXPOSE 8080
+
+ENTRYPOINT [ "./planet9-alpine" ]
