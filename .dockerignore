@@ -2,3 +2,4 @@ dist
 !dist/planet9-alpine
 !dist/planet9-linux
 .git
+node_modules
