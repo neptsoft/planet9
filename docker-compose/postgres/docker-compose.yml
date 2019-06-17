@@ -1,0 +1,29 @@
+version: '3'
+services:
+  planet9:
+    image: neptunesoftware/planet9
+    # command: /bin/sh -c c "./planet9-linux --forceUpgrade && ./planet9-linux"
+    ports:
+      - "${PLANET9_PORT}:8080"
+    environment:
+      DB_TYPE: "postgresql"
+      DB_PSQL_HOST: "postgres"
+      DB_PSQL_PORT: ${POSTGRES_PORT}
+      DB_PSQL_USER: ${POSTGRES_USER}
+      DB_PSQL_DBNAME: ${POSTGRES_DB}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD}
+    links:
+      - postgres
+  postgres:
+    image: postgres:11.2-alpine
+    # uncomment ports if you want to access psql from the host machine
+    # ports:
+    #   - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    expose:
+      - ${POSTGRES_PORT}
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${POSTGRES_DB_DIR}:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
