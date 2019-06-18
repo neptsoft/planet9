@@ -1,8 +1,14 @@
 version: '3'
 services:
   planet9:
-    image: neptunesoftware/planet9
-    # command: /bin/sh -c c "./planet9-linux --forceUpgrade && ./planet9-linux"
+    image: deleteme:latest
+    # make sure the db is up before starting p9
+    entrypoint: "/bin/bash"
+    command:
+      - -c
+      - |
+        until (./planet9-linux --check-db-connection > /dev/null); do echo "waiting..." && sleep 5; done;
+        ./planet9-linux
     ports:
       - "${PLANET9_PORT}:8080"
     environment:
